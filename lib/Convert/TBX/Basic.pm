@@ -80,9 +80,9 @@ sub basic2min {
         do_not_chain_handlers => 1,
         keep_spaces     => 0,
 
-        # these store new conceptEntries, langGroups and termGroups
+        # these store new entries, langGroups and termGroups
         start_tag_handlers => {
-            termEntry => \&_conceptStart,
+            termEntry => \&_entry_start,
             langSet => \&_langStart,
             tig => \&_termGrpStart,
         },
@@ -95,7 +95,7 @@ sub basic2min {
 
             # becomes part of the current TBX::Min::ConceptEntry object
             'descrip[@type="subjectField"]' => sub {
-                shift->{tbx_min_concepts}->[-1]->subject_field($_->text)
+                shift->{tbx_min_entries}->[-1]->subject_field($_->text)
             },
 
             # these become attributes of the current TBX::Min::TermGroup object
@@ -120,8 +120,8 @@ sub basic2min {
     $twig->parse($fh);
 
     my $min = TBX::Min->new();
-    my $concepts = $twig->{tbx_min_concepts} || [];
-    $min->add_concept($_) for (@$concepts);
+    my $entries = $twig->{tbx_min_entries} || [];
+    $min->add_entry($_) for (@$entries);
     $min->id($twig->{tbx_min_att}{id});
     $min->description($twig->{tbx_min_att}{description});
     $min->source_lang($twig->{tbx_min_att}{source_lang});
@@ -179,28 +179,28 @@ sub _as_note {
 	return 1;
 }
 
-# add a new concept entry to the list of those found in this file
-sub _conceptStart {
+# add a new entry to the list of those found in this file
+sub _entry_start {
     my ($twig, $node) = @_;
-    my $concept = TBX::Min::ConceptEntry->new();
+    my $entry = TBX::Min::Entry->new();
     if($node->att('id')){
-        $concept->id($node->att('id'));
+        $entry->id($node->att('id'));
     }else{
-        carp 'found conceptEntry missing id attribute';
+        carp 'found entry missing id attribute';
     }
-    push @{ $twig->{tbx_min_concepts} }, $concept;
+    push @{ $twig->{tbx_min_entries} }, $entry;
     return 1;
 }
 
-#just set the subject_field of the current concept
+#just set the subject_field of the current entry
 sub _subjectField {
     my ($twig, $node) = @_;
-    $twig->{tbx_min_concepts}->[-1]->
+    $twig->{tbx_min_entries}->[-1]->
         subject_field($node->text);
     return 1;
 }
 
-# Create a new LangGroup, add it to the current concept,
+# Create a new LangGroup, add it to the current entry,
 # and set it as the current LangGroup.
 sub _langStart {
     my ($twig, $node) = @_;
@@ -211,7 +211,7 @@ sub _langStart {
         carp 'found langGroup missing xml:lang attribute';
     }
 
-    $twig->{tbx_min_concepts}->[-1]->add_lang_group($lang);
+    $twig->{tbx_min_entries}->[-1]->add_lang_group($lang);
     $twig->{tbx_min_current_lang_grp} = $lang;
     return 1;
 }
