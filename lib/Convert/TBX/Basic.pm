@@ -25,14 +25,15 @@ my %status_map = (
 unless (caller){
     require Data::Dumper;
     print ${ basic2min(@ARGV)->as_xml };
-
 }
 
 # ABSTRACT: Convert TBX-Basic data into TBX-Min
 =head1 SYNOPSIS
 
     use Convert::TBX::Basic 'basic2min';
-    print ${ basic2min('/path/to/file.tbx')->as_xml };
+    # create a TBX-Min document from the TBX-Basic file, using EN
+    # as the source language and DE as the target language
+    print ${ basic2min('/path/to/file.tbx', 'EN', 'DE')->as_xml };
 
 =head1 DESCRIPTION
 
@@ -42,27 +43,33 @@ users, however, TBX-Basic can still be too complicated. This module
 allows you to convert TBX-Basic into TBX-Min, a minimal, DCT-style
 dialect that stresses human-readability and bare-bones simplicity.
 
-=head2 MODULE STATUS
-
-This is alpha-quality code. Please don't use it for production yet.
-It's further development is funded and currently a high priority for
-the TBX steering committee and BYU TRG.
-
 =head1 METHODS
 
 =head2 C<basic2min>
 
-Given TBX-Basic input, this method returns a roughly equivalent
-TBX::Min object. The input may be either a string
-containing a file name or a scalar ref containing the actual TBX-Basic
-document as a string.
+Given TBX-Basic input and the source and target languages, this method
+returns TBX::Min object containing a rough equivalent of the specified
+data. The source and target languages are necessary because TBX-Basic
+can contain many languages, while TBX-Min must contain exactly 2
+languages. The TBX-Basic data may be either a string containing a file
+name or a scalar ref containing the actual TBX-Basic document as a
+string.
 
 Obviously TBX-Min allows much less structured information than
-TBX-Basic, so the conversion must be somewhat lossy. Data categories
-that do not exist in TBX-Min will simply be pasted as a note, prefixed
-with the name of the category and a colon. In the future,
-this function will provide a report of some kind to indicate which data
-is preserved and which is merely pasted as a note.
+TBX-Basic, so the conversion must be lossy. C<< <termNote> >>s,
+C<< <descrip> >>, and C<< <admins> >>s will be converted if there is a
+correspondence with TBX-Min, but those with C<type> attribute values
+with no correspondence in TBX-Min will simply be pasted as a note,
+prefixed with the name of the category and a colon. This is only
+possible for elements at the term level (children of a
+C<< <termEntry> >> element) because TBX-Min only allows notes inside of
+its C<< <termGrp> >> elements.
+
+As quite a bit of data can be packed into a single C<< <note> >>
+element, the result can be quite messy. L<Log::Any> is used to record
+1) the elements which are stuffed into a note and 2) the elements that
+are skipped altogether during the conversion process, both at the
+info level.
 
 =cut
 sub basic2min {
