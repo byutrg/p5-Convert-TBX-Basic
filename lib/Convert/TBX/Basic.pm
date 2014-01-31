@@ -111,8 +111,9 @@ sub basic2min {
 
             # the information which cannot be converted faithfully
             # gets added as a note, with its data category prepended
-            'tig/admin' => \&_as_note,
-            'tig/descrip' => \&_as_note,
+            'tig//admin' => \&_as_note,
+            'tig//descrip' => \&_as_note,
+            'tig//transac' => \&_as_note,
             termNote => \&_as_note,
 
             _default_ => \&_log_missed,
