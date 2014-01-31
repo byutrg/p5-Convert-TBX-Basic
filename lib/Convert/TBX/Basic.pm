@@ -123,6 +123,16 @@ sub basic2min {
             'tig//transac' => \&_as_note,
             termNote => \&_as_note,
 
+            # add no-op handlers for twig not needing conversion
+            'sourceDesc/p' => sub {},
+            titleStmt => sub {},
+            fileDesc => sub {},
+            martifHeader => sub {},
+            text => sub {},
+            body => sub {},
+            martif => sub {},
+
+            # log anything that wasn't converted
             _default_ => \&_log_missed,
         }
     );
@@ -193,7 +203,7 @@ sub _as_note {
 	my $note = $grp->note() || '';
 	$grp->note($note . "\n" .
 		$node->att('type') . ':' . $node->text);
-    $log->info(_element_string($node) . ' pasted in note')
+    $log->info('element ' . $node->xpath . ' pasted in note')
         if $log->is_info;
 	return 1;
 }
@@ -248,7 +258,7 @@ sub _termGrpStart {
 # log that an element was not converted
 sub _log_missed {
     my ($twig, $node) = @_;
-    $log->info(_element_string($node) . ' not converted')
+    $log->info('element ' . $node->xpath . ' not converted')
         if $log->is_info();
     return;
 }
