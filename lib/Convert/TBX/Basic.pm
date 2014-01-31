@@ -5,6 +5,7 @@ use XML::Twig;
 use autodie;
 use Path::Tiny;
 use Carp;
+use Log::Any '$log';
 use TBX::Min;
 use TBX::Min::ConceptEntry;
 use TBX::Min::LangGroup;
@@ -113,6 +114,8 @@ sub basic2min {
             'tig/admin' => \&_as_note,
             'tig/descrip' => \&_as_note,
             termNote => \&_as_note,
+
+            _default_ => \&_log_missed,
         }
     );
 
@@ -176,6 +179,8 @@ sub _as_note {
 	my $note = $grp->note() || '';
 	$grp->note($note . "\n" .
 		$node->att('type') . ':' . $node->text);
+    $log->info(_element_string($node) . ' pasted in note')
+        if $log->is_info;
 	return 1;
 }
 
@@ -224,6 +229,32 @@ sub _termGrpStart {
     $twig->{tbx_min_current_lang_grp}->add_term_group($term);
     $twig->{tbx_min_current_term_grp} = $term;
     return 1;
+}
+
+# log that an element was not converted
+sub _log_missed {
+    my ($twig, $node) = @_;
+    $log->info(_element_string($node) . ' not converted')
+        if $log->is_info();
+    return;
+}
+
+# return a string for representing an element, possibly including an id
+# and a type attribute value
+sub _element_string {
+    my ($el) = @_;
+    my $name = $el->tag;
+    my @qualifier;
+    if(my $type = $el->att('type')){
+        push @qualifier, $type;
+    }
+    if(my $id = $el->id || $el->att('id')){
+        push @qualifier, $id;
+    }
+    if(@qualifier){
+        return "$name (" . join(';', @qualifier) . ')';
+    }
+    return $name;
 }
 
 1;
