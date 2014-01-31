@@ -23,7 +23,7 @@ my %status_map = (
 
 unless (caller){
     require Data::Dumper;
-    print basic2min(@ARGV)->as_xml;
+    print ${ basic2min(@ARGV)->as_xml };
 
 }
 
@@ -31,7 +31,7 @@ unless (caller){
 =head1 SYNOPSIS
 
     use Convert::TBX::Basic 'basic2min';
-    print basic2min('/path/to/file.tbx')->as_xml;
+    print ${ basic2min('/path/to/file.tbx')->as_xml };
 
 =head1 DESCRIPTION
 
