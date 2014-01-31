@@ -48,12 +48,12 @@ dialect that stresses human-readability and bare-bones simplicity.
 =head2 C<basic2min>
 
 Given TBX-Basic input and the source and target languages, this method
-returns TBX::Min object containing a rough equivalent of the specified
-data. The source and target languages are necessary because TBX-Basic
-can contain many languages, while TBX-Min must contain exactly 2
-languages. The TBX-Basic data may be either a string containing a file
-name or a scalar ref containing the actual TBX-Basic document as a
-string.
+returns a L<TBX::Min> object containing a rough equivalent of the
+specified data. The source and target languages are necessary because
+TBX-Basic can contain many languages, while TBX-Min must contain
+exactly 2 languages. The TBX-Basic data may be either a string
+containing a file name or a scalar ref containing the actual TBX-Basic
+document as a string.
 
 Obviously TBX-Min allows much less structured information than
 TBX-Basic, so the conversion must be lossy. C<< <termNote> >>s,
@@ -99,7 +99,7 @@ sub basic2min {
         	# header attributes
             title => \&_title,
             sourceDesc => \&_source_desc,
-            'titleStmt/note' => \&_source_desc,
+            'titleStmt/note' => \&_title_note,
 
             # becomes part of the current TBX::Min::ConceptEntry object
             'descrip[@type="subjectField"]' => sub {
@@ -161,6 +161,12 @@ sub _title {
     my ($twig, $node) = @_;
 	$twig->{tbx_min_att}{id} = $node->text;
 	return 0;
+}
+
+sub _title_note {
+    my ($twig, $node) = @_;
+    $twig->{tbx_min_att}{description} .= $node->text . "\n";
+    return 0;
 }
 
 sub _source_desc {
