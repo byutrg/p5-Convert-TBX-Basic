@@ -47,6 +47,9 @@ dialect that stresses human-readability and bare-bones simplicity.
 
 =head2 C<basic2min>
 
+    # example usage
+    basic2min('path/to/file.tbx', 'EN', 'DE');
+
 Given TBX-Basic input and the source and target languages, this method
 returns a L<TBX::Min> object containing a rough equivalent of the
 specified data. The source and target languages are necessary because
@@ -73,7 +76,8 @@ info level.
 
 =cut
 sub basic2min {
-    my ($data) = @_;
+    (my ($data, $source, $target) = @_) == 3 or
+        croak 'Usage: basic2min(data, source-language, target-language)';
 
     if(!$data){
         croak 'missing required data argument';
@@ -131,11 +135,17 @@ sub basic2min {
             text => sub {},
             body => sub {},
             martif => sub {},
+            termEntry => sub {},
+            langSet => sub {},
+            tig => sub {},
 
             # log anything that wasn't converted
             _default_ => \&_log_missed,
         }
     );
+
+    # provide language info to the handlers via storage in the twig
+    $twig->{tbx_languages} = [lc($source), lc($target)];
 
     # use handlers to process individual tags, then grab the result
     $twig->parse($fh);
@@ -145,8 +155,8 @@ sub basic2min {
     $min->add_entry($_) for (@$entries);
     $min->id($twig->{tbx_min_att}{id});
     $min->description($twig->{tbx_min_att}{description});
-    $min->source_lang($twig->{tbx_min_att}{source_lang});
-    $min->target_lang($twig->{tbx_min_att}{target_lang});
+    $min->source_lang($source);
+    $min->target_lang($target);
     return $min;
 }
 
@@ -261,24 +271,6 @@ sub _log_missed {
     $log->info('element ' . $node->xpath . ' not converted')
         if $log->is_info();
     return;
-}
-
-# return a string for representing an element, possibly including an id
-# and a type attribute value
-sub _element_string {
-    my ($el) = @_;
-    my $name = $el->tag;
-    my @qualifier;
-    if(my $type = $el->att('type')){
-        push @qualifier, $type;
-    }
-    if(my $id = $el->id || $el->att('id')){
-        push @qualifier, $id;
-    }
-    if(@qualifier){
-        return "$name (" . join(';', @qualifier) . ')';
-    }
-    return $name;
 }
 
 1;

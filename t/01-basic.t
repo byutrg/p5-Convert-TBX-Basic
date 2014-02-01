@@ -7,6 +7,7 @@ plan tests => 1 + blocks() + blocks('log');
 use Test::NoWarnings;
 use Test::XML;
 use Test::Base;
+filters_delay; # necessary for testing logs
 use Log::Any::Test;
 use Log::Any qw($log);
 use Convert::TBX::Basic 'basic2min';
@@ -14,7 +15,7 @@ use Convert::TBX::Basic 'basic2min';
 sub convert {
     my ($tbx) = @_;
     $log->clear();
-    my $min = basic2min(\$tbx);
+    my $min = basic2min(\$tbx, 'EN', 'DE');
     return ${ $min->as_xml };
 }
 
@@ -30,10 +31,12 @@ sub get_msgs {
 filters {basic => 'convert', log => [qw(lines chomp array)]};
 
 for my $block (blocks()){
-    is_xml($block->basic, $block->min, $block->name)
-        or note $block->basic;
+    $log->clear();
+    $block->run_filters;
+    is_xml($block->basic, $block->min, $block->name);
     if($block->log){
-        is_deeply($block->log, get_msgs(), $block->name . '(logs)');
+        is_deeply(get_msgs(), $block->log, $block->name . ' (logs)')
+            or diag join "\n", @{ get_msgs() };
     }
     # my $msgs = get_msgs();
     # local $" = "\n";
@@ -73,6 +76,7 @@ __DATA__
         Some note about the file title here...
         Some random description.
     </description>
+    <languages source="EN" target="DE"/>
   </header>
   <body/>
 </TBX>
@@ -80,3 +84,57 @@ __DATA__
 --- log
 element /martif/martifHeader/fileDesc/encodingDesc/p not converted
 element /martif/martifHeader/fileDesc/encodingDesc not converted
+
+=== terms
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="DE">
+                    <tig>
+                        <term>email</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="DE">
+        <termGroup>
+          <term>email</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+--- log
