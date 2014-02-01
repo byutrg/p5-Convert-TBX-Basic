@@ -79,10 +79,6 @@ sub basic2min {
     (my ($data, $source, $target) = @_) == 3 or
         croak 'Usage: basic2min(data, source-language, target-language)';
 
-    if(!$data){
-        croak 'missing required data argument';
-    }
-
     my $fh = _get_handle($data);
 
     # build a twig out of the input document
