@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More;
+use Test::More 0.88;
 plan tests => 1 + blocks() + blocks('log');
 use Test::NoWarnings;
 use Test::XML;
@@ -36,7 +36,7 @@ for my $block (blocks()){
     is_xml($block->basic, $block->min, $block->name);
     if($block->log){
         is_deeply(get_msgs(), $block->log, $block->name . ' (logs)')
-            or diag join "\n", @{ get_msgs() };
+            or note explain get_msgs();
     }
     # my $msgs = get_msgs();
     # local $" = "\n";
