@@ -1,0 +1,36 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+# PODNAME: basic2min
+# ABSTRACT: Convert a TBX-Basic file into TBX-Min
+# VERSION
+use Convert::TBX::Basic 'basic2min';
+# send conversion info to stderr
+use Log::Any::Adapter ('Stderr');
+
+die "Usage: $0 <file.tbx> <source-lang> <target-lang>\n"
+    unless @ARGV == 3;
+
+my ($basic_file, $source, $target) = @ARGV;
+
+my $min = basic2min($basic_file, $source, $target);
+
+print ${ $min->as_xml };
+
+__END__
+
+=head1 SYNOPSIS
+
+  % basic2min file.tbx en fr 2>log.txt
+
+=head1 DESCRIPTION
+
+This script takes three arguments: the name of a TBX-Basic file and
+source and target language abreviations indicating which languages
+to extract from the file. Relevant terms are extracted from the file
+and a TBX::Min document is printed to standard out. All logs are
+printed to stderr.
+
+=head1 SEE ALSO
+This script is a simple wrapper around the C<basic2min>
+function in L<Convert::TBX::Basic>.

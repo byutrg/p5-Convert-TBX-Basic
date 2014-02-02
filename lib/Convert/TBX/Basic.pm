@@ -1,6 +1,8 @@
 package Convert::TBX::Basic;
 use strict;
 use warnings;
+# ABSTRACT: Convert TBX-Basic data into TBX-Min
+# VERSION
 use XML::Twig;
 use autodie;
 use Path::Tiny;
@@ -12,7 +14,7 @@ use TBX::Min::LangGroup;
 use TBX::Min::TermGroup;
 use Try::Tiny;
 use Exporter::Easy (
-	OK => ['basic2min']
+    OK => ['basic2min']
 );
 
 my %status_map = (
@@ -22,12 +24,6 @@ my %status_map = (
     'supersededTerm-admn-st' => 'obsolete'
 );
 
-unless (caller){
-    require Data::Dumper;
-    print ${ basic2min(@ARGV)->as_xml };
-}
-
-# ABSTRACT: Convert TBX-Basic data into TBX-Min
 =head1 SYNOPSIS
 
     use Convert::TBX::Basic 'basic2min';
@@ -366,4 +362,6 @@ Fix the above caveats.
 It would be nice to preserve the C<xml:id> attributes in order
 to make the conversion process more tranparent to the user.
 
+=head1 SEE ALSO
 
+L<basic2min>
