@@ -131,8 +131,8 @@ sub basic2min {
             text => sub {},
             body => sub {},
             martif => sub {},
-            termEntry => sub {},
             langSet => sub {},
+            termEntry => sub {},
             tig => sub {},
 
             # log anything that wasn't converted
@@ -145,6 +145,19 @@ sub basic2min {
 
     # use handlers to process individual tags, then grab the result
     $twig->parse($fh);
+
+    # warn if the document didn't have tig's of the given source and
+    # target language
+    if(keys %{ $twig->{tbx_found_languages} } != 2 and
+            $log->is_warn){
+        # find the difference between the expected languages
+        # and those found in the TBX document
+        my %missing;
+        @missing{ @{$twig->{tbx_languages}} } = undef;
+        delete @missing{ keys %{$twig->{tbx_found_languages}} };
+        $log->warn('could not find langSets for language(s): ' .
+            join ', ', sort keys %missing);
+    }
 
     my $min = TBX::Min->new();
     my $entries = $twig->{tbx_min_entries} || [];
@@ -237,17 +250,29 @@ sub _subjectField {
 
 # Create a new LangGroup, add it to the current entry,
 # and set it as the current LangGroup.
+# This langSet is ignored if its language is different from
+# the source and target languages specified to basic2min
 sub _langStart {
     my ($twig, $node) = @_;
-    my $lang = TBX::Min::LangGroup->new();
-    if($node->att('xml:lang')){
-        $lang->code($node->att('xml:lang'));
-    }else{
-        carp 'found langGroup missing xml:lang attribute';
+    my $lang_grp;
+    my $lang = $node->att('xml:lang');
+    if(!$lang){
+        # skip if missing language
+        $log->warn('skipping langSet without language: ' .
+            $node->xpath) if $log->is_warn;
+        $node->ignore;
+        return 1;
+    }elsif(!grep {$_ eq lc $lang} @{$twig->{tbx_languages}}){
+        # skip if non-applicable language
+        $node->ignore;
+        return 1;
     }
 
-    $twig->{tbx_min_entries}->[-1]->add_lang_group($lang);
-    $twig->{tbx_min_current_lang_grp} = $lang;
+    $lang_grp = TBX::Min::LangGroup->new();
+    $lang_grp->code($lang);
+    $twig->{tbx_found_languages}{lc $lang} = undef;
+    $twig->{tbx_min_entries}->[-1]->add_lang_group($lang_grp);
+    $twig->{tbx_min_current_lang_grp} = $lang_grp;
     return 1;
 }
 

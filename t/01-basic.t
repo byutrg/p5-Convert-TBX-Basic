@@ -81,10 +81,6 @@ __DATA__
   <body/>
 </TBX>
 
---- log
-element /martif/martifHeader/fileDesc/encodingDesc/p not converted
-element /martif/martifHeader/fileDesc/encodingDesc not converted
-
 === terms
 --- basic
 <martif type="TBX-Basic" xml:lang="en-US">
@@ -137,4 +133,99 @@ element /martif/martifHeader/fileDesc/encodingDesc not converted
   </body>
 </TBX>
 
+=== only convert specified language sets
+The output should only have the EN entry,
+which is specified as the source language.
+FR, which was not specified, should be ignored.
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="FR">
+                    <tig>
+                        <term>courriel</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
 --- log
+could not find langSets for language(s): de
+
+=== only convert specified language sets (none found)
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="DQ">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="BK">
+                    <tig>
+                        <term>email</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5"/>
+  </body>
+</TBX>
+
+--- log
+could not find langSets for language(s): de, en
