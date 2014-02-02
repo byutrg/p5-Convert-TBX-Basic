@@ -133,6 +133,58 @@ __DATA__
   </body>
 </TBX>
 
+=== terms case-insensitive
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="En">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="de">
+                    <tig>
+                        <term>email</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="En">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="de">
+        <termGroup>
+          <term>email</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
 === only convert specified language sets
 The output should only have the EN entry,
 which is specified as the source language.
