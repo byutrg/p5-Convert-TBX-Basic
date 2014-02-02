@@ -339,25 +339,7 @@ sub _log_missed {
 
 1;
 
-=head1 CAVEATS
-
-Currently the output document is invalid because it does not add
-source and target languages. In the future, these will probably
-have to be provided by the user, or another program which scans
-a TBX-Basic file and finds all of the language pairings.
-
-TBX-Basic allows for many more than 2 languages, and TBX-Min only
-allows for 2 languages. Converting a TBX-Basic file with multiple
-languages requires that multiple TBX-Min files be created, but that's
-not currently being done. So for now, only use files with 2 languages.
-
-Currently data not representable in TBX-Min is pasted into a note.
-However, this is only done for term-level information. Other level
-information is not yet converted.
-
 =head1 TODO
-
-Fix the above caveats.
 
 It would be nice to preserve the C<xml:id> attributes in order
 to make the conversion process more tranparent to the user.
