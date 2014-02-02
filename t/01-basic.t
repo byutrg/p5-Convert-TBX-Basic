@@ -343,6 +343,78 @@ element /martif/text/body/termEntry/langSet/tig/transacGrp/transac not converted
 element /martif/text/body/termEntry/langSet/tig/transacGrp/transacNote not converted
 element /martif/text/body/termEntry/langSet/tig/transacGrp/date pasted in note
 
+=== elements not converted
+Some elements cannot be converted at all, and they must be logged
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <p type="XCSURI">TBXBasicXCSV02.xcs
+            </p>
+        </encodingDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="DE">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+        <back>
+            <refObjectList type="respPerson">
+                <refObject id="US5002">
+                    <item type="fn">John Smith</item>
+                </refObject>
+            </refObjectList>
+        </back>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="DE">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+--- log
+element /martif/martifHeader/encodingDesc/p not converted
+element /martif/martifHeader/encodingDesc not converted
+element /martif/text/back/refObjectList/refObject/item not converted
+element /martif/text/back/refObjectList/refObject not converted
+element /martif/text/back/refObjectList not converted
+element /martif/text/back not converted
+
 === entry subjectField
 --- basic
 <martif type="TBX-Basic" xml:lang="en-US">
