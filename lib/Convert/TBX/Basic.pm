@@ -101,18 +101,21 @@ sub basic2min {
             sourceDesc => \&_source_desc,
             'titleStmt/note' => \&_title_note,
 
+            # decide whether to add a new entry
             termEntry => \&_entry,
 
             # becomes part of the current TBX::Min::ConceptEntry object
             'descrip[@type="subjectField"]' => sub {
-                shift->{tbx_current_entry}->subject_field($_->text)
-            },
+                shift->{tbx_min_min_current_entry}->
+                    subject_field($_->text)},
 
             # these become attributes of the current TBX::Min::TermGroup object
             'termNote[@type="administrativeStatus"]' => \&_status,
-            term => sub {shift->{tbx_min_current_term_grp}->term($_->text)},
+            term => sub {shift->{tbx_min_current_term_grp}->
+                term($_->text)},
             'termNote[@type="partOfSpeech"]' => sub {
-                shift->{tbx_min_current_term_grp}->part_of_speech($_->text)},
+                shift->{tbx_min_current_term_grp}->
+                part_of_speech($_->text)},
             note => sub {
             	shift->{tbx_min_current_term_grp}->note($_->text)},
             'admin[@type="customerSubset"]' => sub {
@@ -144,9 +147,12 @@ sub basic2min {
     # provide language info to the handlers via storage in the twig
     $twig->{tbx_languages} = [lc($source), lc($target)];
 
+    my $min = TBX::Min->new();
+    $min->source_lang($source);
+    $min->target_lang($target);
+
     # use handlers to process individual tags and
     # add information to $min
-    my $min = TBX::Min->new();
     $twig->{tbx_min} = $min;
     $twig->parse($fh);
 
@@ -157,16 +163,12 @@ sub basic2min {
         # find the difference between the expected languages
         # and those found in the TBX document
         my %missing;
-        @missing{ @{$twig->{tbx_languages}} } = undef;
+        @missing{ lc $min->source_lang, lc $min->target_lang() } = undef;
         delete @missing{ keys %{$twig->{tbx_found_languages}} };
         $log->warn('could not find langSets for language(s): ' .
             join ', ', sort keys %missing);
     }
 
-    $min->id($twig->{tbx_min_att}{id});
-    $min->description($twig->{tbx_min_att}{description});
-    $min->source_lang($source);
-    $min->target_lang($target);
     return $min;
 }
 
@@ -189,20 +191,23 @@ sub _get_handle {
 
 sub _title {
     my ($twig, $node) = @_;
-	$twig->{tbx_min_att}{id} = $node->text;
+	$twig->{tbx_min}->id($node->text);
 	return 0;
 }
 
 sub _title_note {
     my ($twig, $node) = @_;
-    $twig->{tbx_min_att}{description} .= $node->text . "\n";
+    my $description = $twig->{tbx_min}->description || '';
+    $twig->{tbx_min}->description($description . $node->text . "\n");
     return 0;
 }
 
 sub _source_desc {
     my ($twig, $node) = @_;
     for my $p($node->children('p')){
-	    $twig->{tbx_min_att}{description} .= $node->text . "\n";
+        my $description = $twig->{tbx_min}->description || '';
+        $twig->{tbx_min}->description(
+            $description . $node->text . "\n");
     }
     return 0;
 }
@@ -237,14 +242,14 @@ sub _entry_start {
     }else{
         carp 'found entry missing id attribute';
     }
-    $twig->{tbx_current_entry} = $entry;
+    $twig->{tbx_min_min_current_entry} = $entry;
     return 1;
 }
 
 # add the entry to the TBX::Min object if it has any langGroups
 sub _entry {
     my ($twig, $node) = @_;
-    my $entry = $twig->{tbx_current_entry};
+    my $entry = $twig->{tbx_min_min_current_entry};
     if(@{$entry->lang_groups}){
         $twig->{tbx_min}->add_entry($entry);
     }elsif($log->is_info){
@@ -255,8 +260,7 @@ sub _entry {
 #just set the subject_field of the current entry
 sub _subjectField {
     my ($twig, $node) = @_;
-    $twig->{tbx_current_entry}->
-        subject_field($node->text);
+    $twig->{tbx_min_min_current_entry}->subject_field($node->text);
     return 1;
 }
 
@@ -283,7 +287,7 @@ sub _langStart {
     $lang_grp = TBX::Min::LangGroup->new();
     $lang_grp->code($lang);
     $twig->{tbx_found_languages}{lc $lang} = undef;
-    $twig->{tbx_current_entry}->add_lang_group($lang_grp);
+    $twig->{tbx_min_min_current_entry}->add_lang_group($lang_grp);
     $twig->{tbx_min_current_lang_grp} = $lang_grp;
     return 1;
 }
