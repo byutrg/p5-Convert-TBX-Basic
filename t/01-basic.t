@@ -133,7 +133,268 @@ __DATA__
   </body>
 </TBX>
 
-=== terms case-insensitive
+=== term partOfSpeech
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                        <termNote type="partOfSpeech">noun</termNote>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+          <partOfSpeech>noun</partOfSpeech>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+=== term customerSubset
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                        <admin type="customerSubset">IBM</admin>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+          <customer>IBM</customer>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+=== term note
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                        <note>some note</note>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+          <note>some note</note>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+=== entry subjectField
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <descrip type="subjectField">
+                    information technology</descrip>
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <subjectField>information technology</subjectField>
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+=== term status
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                        <termNote type="administrativeStatus">
+                            preferredTerm-admn-sts</termNote>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>electronic mail</term>
+                        <termNote type="administrativeStatus">
+                            admittedTerm-admn-sts</termNote>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>computer mail</term>
+                        <termNote type="administrativeStatus">
+                            deprecatedTerm-admn-sts</termNote>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>internet mail</term>
+                        <termNote type="administrativeStatus">
+                            supersededTerm-admn-st</termNote>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+          <termStatus>preferred</termStatus>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>electronic mail</term>
+          <termStatus>admitted</termStatus>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>computer mail</term>
+          <termStatus>notRecommended</termStatus>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>internet mail</term>
+          <termStatus>obsolete</termStatus>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+=== terms language case-insensitive
 --- basic
 <martif type="TBX-Basic" xml:lang="en-US">
     <martifHeader>

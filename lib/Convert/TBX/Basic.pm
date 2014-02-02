@@ -125,31 +125,35 @@ sub basic2min {
             termEntry => \&_entry,
 
             # becomes part of the current TBX::Min::ConceptEntry object
-            'descrip[@type="subjectField"]' => sub {
+            'termEntry/descrip[@type="subjectField"]' => sub {
                 shift->{tbx_min_min_current_entry}->
                     subject_field($_->text)},
 
-            # these become attributes of the current TBX::Min::TermGroup object
-            'termNote[@type="administrativeStatus"]' => \&_status,
+            # these become attributes of the current
+            # TBX::Min::TermGroup object
+            'tig/termNote[@type="administrativeStatus"]' => \&_status,
             term => sub {shift->{tbx_min_current_term_grp}->
                 term($_->text)},
-            'termNote[@type="partOfSpeech"]' => sub {
+            'tig/termNote[@type="partOfSpeech"]' => sub {
                 shift->{tbx_min_current_term_grp}->
                 part_of_speech($_->text)},
-            note => sub {
+            'tig/note' => sub {
             	shift->{tbx_min_current_term_grp}->note($_->text)},
-            'admin[@type="customerSubset"]' => sub {
+            'tig/admin[@type="customerSubset"]' => sub {
                 shift->{tbx_min_current_term_grp}->customer($_->text)},
 
             # the information which cannot be converted faithfully
-            # gets added as a note, with its data category prepended
-            'tig//admin' => \&_as_note,
-            'tig//descrip' => \&_as_note,
-            'tig//transac' => \&_as_note,
-            termNote => \&_as_note,
+            # gets added as a note to the current TBX::Min::TermGroup,
+            # with its data category prepended
+            'tig/admin' => \&_as_note,
+            'tig/descrip' => \&_as_note,
+            'tig/transac' => \&_as_note,
+            'tig/termNote' => \&_as_note,
+            'tig/termNote' => \&_as_note,
 
-            # add no-op handlers for twig not needing conversion
-            'sourceDesc/p' => sub {},
+            # add no-op handlers for twigs not needing conversion
+            # so that they aren't logged as being skipped
+            'sourceDesc/p' => sub {}, # treated in sourceDesc handler
             titleStmt => sub {},
             fileDesc => sub {},
             martifHeader => sub {},
