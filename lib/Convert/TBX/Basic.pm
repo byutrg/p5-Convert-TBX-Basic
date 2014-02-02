@@ -101,9 +101,11 @@ sub basic2min {
             sourceDesc => \&_source_desc,
             'titleStmt/note' => \&_title_note,
 
+            termEntry => \&_entry,
+
             # becomes part of the current TBX::Min::ConceptEntry object
             'descrip[@type="subjectField"]' => sub {
-                shift->{tbx_min_entries}->[-1]->subject_field($_->text)
+                shift->{tbx_current_entry}->subject_field($_->text)
             },
 
             # these become attributes of the current TBX::Min::TermGroup object
@@ -132,7 +134,6 @@ sub basic2min {
             body => sub {},
             martif => sub {},
             langSet => sub {},
-            termEntry => sub {},
             tig => sub {},
 
             # log anything that wasn't converted
@@ -143,7 +144,10 @@ sub basic2min {
     # provide language info to the handlers via storage in the twig
     $twig->{tbx_languages} = [lc($source), lc($target)];
 
-    # use handlers to process individual tags, then grab the result
+    # use handlers to process individual tags and
+    # add information to $min
+    my $min = TBX::Min->new();
+    $twig->{tbx_min} = $min;
     $twig->parse($fh);
 
     # warn if the document didn't have tig's of the given source and
@@ -159,11 +163,6 @@ sub basic2min {
             join ', ', sort keys %missing);
     }
 
-    my $min = TBX::Min->new();
-    my $entries = $twig->{tbx_min_entries} || [];
-    for (@$entries){
-        $min->add_entry($_) if(@{$_->lang_groups});
-    }
     $min->id($twig->{tbx_min_att}{id});
     $min->description($twig->{tbx_min_att}{description});
     $min->source_lang($source);
@@ -238,14 +237,25 @@ sub _entry_start {
     }else{
         carp 'found entry missing id attribute';
     }
-    push @{ $twig->{tbx_min_entries} }, $entry;
+    $twig->{tbx_current_entry} = $entry;
     return 1;
+}
+
+# add the entry to the TBX::Min object if it has any langGroups
+sub _entry {
+    my ($twig, $node) = @_;
+    my $entry = $twig->{tbx_current_entry};
+    if(@{$entry->lang_groups}){
+        $twig->{tbx_min}->add_entry($entry);
+    }elsif($log->is_info){
+        $log->info('element ' . $node->xpath . ' not converted');
+    }
 }
 
 #just set the subject_field of the current entry
 sub _subjectField {
     my ($twig, $node) = @_;
-    $twig->{tbx_min_entries}->[-1]->
+    $twig->{tbx_current_entry}->
         subject_field($node->text);
     return 1;
 }
@@ -273,7 +283,7 @@ sub _langStart {
     $lang_grp = TBX::Min::LangGroup->new();
     $lang_grp->code($lang);
     $twig->{tbx_found_languages}{lc $lang} = undef;
-    $twig->{tbx_min_entries}->[-1]->add_lang_group($lang_grp);
+    $twig->{tbx_current_entry}->add_lang_group($lang_grp);
     $twig->{tbx_min_current_lang_grp} = $lang_grp;
     return 1;
 }

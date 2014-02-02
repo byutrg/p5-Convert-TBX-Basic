@@ -227,4 +227,5 @@ could not find langSets for language(s): de
 </TBX>
 
 --- log
+element /martif/text/body/termEntry not converted
 could not find langSets for language(s): de, en
