@@ -137,8 +137,7 @@ sub basic2min {
             'tig/termNote[@type="partOfSpeech"]' => sub {
                 shift->{tbx_min_current_term_grp}->
                 part_of_speech($_->text)},
-            'tig/note' => sub {
-            	shift->{tbx_min_current_term_grp}->note($_->text)},
+            'tig/note' => \&_as_note,
             'tig/admin[@type="customerSubset"]' => sub {
                 shift->{tbx_min_current_term_grp}->customer($_->text)},
 
@@ -147,9 +146,10 @@ sub basic2min {
             # with its data category prepended
             'tig/admin' => \&_as_note,
             'tig/descrip' => \&_as_note,
+            'tig/termNote' => \&_as_note,
             'tig/transac' => \&_as_note,
-            'tig/termNote' => \&_as_note,
-            'tig/termNote' => \&_as_note,
+            'tig/transacNote' => \&_as_note,
+            'tig/transacGrp/date' => \&_as_note,
 
             # add no-op handlers for twigs not needing conversion
             # so that they aren't logged as being skipped
@@ -162,6 +162,7 @@ sub basic2min {
             martif => sub {},
             langSet => sub {},
             tig => sub {},
+            transacGrp => sub {},
 
             # log anything that wasn't converted
             _default_ => \&_log_missed,
@@ -245,15 +246,21 @@ sub _status {
     return 0;
 }
 
-# turn the node info into a note labeled with the type
+# turn the node info into a note labeled with the type;
+# paste this at the end of any existing note
 sub _as_note {
 	my ($twig, $node) = @_;
 	my $grp = $twig->{tbx_min_current_term_grp};
 	my $note = $grp->note() || '';
+    my $type = $node->att('type') || '';
+    $type .= ':' if $type;
+
 	$grp->note($note . "\n" .
-		$node->att('type') . ':' . $node->text);
-    $log->info('element ' . $node->xpath . ' pasted in note')
-        if $log->is_info;
+		$type . $node->text);
+    if($log->is_info and $node->name ne 'note'){
+        $log->info('element ' . $node->xpath . ' pasted in note');
+    }
+
 	return 1;
 }
 

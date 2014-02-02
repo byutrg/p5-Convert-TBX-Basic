@@ -265,6 +265,84 @@ __DATA__
   </body>
 </TBX>
 
+=== elements pasted as notes
+If not specifically represented in TBX-Min, extra data in
+<tig> elements is rendered as notes in the resulting termGroup.
+--- basic
+<martif type="TBX-Basic" xml:lang="en-US">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Some random description.</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="c5">
+                <langSet xml:lang="EN">
+                    <tig>
+                        <term>e-mail</term>
+                        <descrip type="xxx">descrip note</descrip>
+                        <admin type="yyy">admin note</admin>
+                        <termNote type="zzz">termNote note</termNote>
+                        <transacGrp>
+                            <transac type="transactionType">origination</transac>
+                            <transacNote type="responsibility" target="US5001">Jane</transacNote>
+                            <date>2007-07-22</date>
+                        </transacGrp>
+                        <note>note note</note>
+                    </tig>
+                </langSet>
+                <langSet xml:lang="DE">
+                    <tig>
+                        <term>e-mail</term>
+                    </tig>
+                </langSet>
+            </termEntry>
+        </body>
+    </text>
+</martif>
+
+--- min
+<TBX dialect="TBX-Min">
+  <header>
+    <description>
+        Some random description.
+    </description>
+    <languages source="EN" target="DE"/>
+  </header>
+  <body>
+    <entry id="c5">
+      <langGroup xml:lang="EN">
+        <termGroup>
+          <term>e-mail</term>
+          <note>
+            xxx:descrip note
+            yyy:admin note
+            zzz:termNote note
+            2007-07-22
+            note note
+        </note>
+        </termGroup>
+      </langGroup>
+      <langGroup xml:lang="DE">
+        <termGroup>
+          <term>e-mail</term>
+        </termGroup>
+      </langGroup>
+    </entry>
+  </body>
+</TBX>
+
+--- log
+element /martif/text/body/termEntry/langSet/tig/descrip pasted in note
+element /martif/text/body/termEntry/langSet/tig/admin pasted in note
+element /martif/text/body/termEntry/langSet/tig/termNote pasted in note
+element /martif/text/body/termEntry/langSet/tig/transacGrp/transac not converted
+element /martif/text/body/termEntry/langSet/tig/transacGrp/transacNote not converted
+element /martif/text/body/termEntry/langSet/tig/transacGrp/date pasted in note
+
 === entry subjectField
 --- basic
 <martif type="TBX-Basic" xml:lang="en-US">
