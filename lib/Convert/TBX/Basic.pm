@@ -70,9 +70,30 @@ its C<< <termGrp> >> elements.
 
 As quite a bit of data can be packed into a single C<< <note> >>
 element, the result can be quite messy. L<Log::Any> is used to record
-1) the elements which are stuffed into a note and 2) the elements that
-are skipped altogether during the conversion process, both at the
-info level.
+the following:
+
+=over
+
+=item 1
+
+(info) the elements which are stuffed into a note
+
+=item 2
+
+(info) the elements that are skipped altogether during the
+conversion process
+
+=item 3
+
+(warn) The entries that are skipped because they contained no relevant
+language sets, and
+
+=item 4
+
+(warn) The entries that are skipped because they did not have any
+language specified.
+
+=back
 
 =cut
 sub basic2min {
