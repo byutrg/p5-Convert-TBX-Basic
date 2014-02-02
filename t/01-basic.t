@@ -54,7 +54,8 @@ __DATA__
                 <note>Some note about the file title here...</note>
             </titleStmt>
             <sourceDesc>
-                <p>Some random description.</p>
+                <p>Some random description1.</p>
+                <p>Some random description2.</p>
             </sourceDesc>
         <encodingDesc>
             <p type="XCSURI">TBXBasicXCSV02.xcs
@@ -74,7 +75,8 @@ __DATA__
     <id>Test 1</id>
     <description>
         Some note about the file title here...
-        Some random description.
+        Some random description1.
+        Some random description2.
     </description>
     <languages source="EN" target="DE"/>
   </header>

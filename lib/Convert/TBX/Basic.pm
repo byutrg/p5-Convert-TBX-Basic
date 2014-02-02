@@ -228,7 +228,7 @@ sub _source_desc {
     for my $p($node->children('p')){
         my $description = $twig->{tbx_min}->description || '';
         $twig->{tbx_min}->description(
-            $description . $node->text . "\n");
+            $description . $p->text . "\n");
     }
     return 0;
 }
