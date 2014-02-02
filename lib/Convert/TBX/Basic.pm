@@ -225,7 +225,7 @@ sub _title_note {
 
 sub _source_desc {
     my ($twig, $node) = @_;
-    for my $p($node->children('p')){
+    for my $p ($node->children('p')){
         my $description = $twig->{tbx_min}->description || '';
         $twig->{tbx_min}->description(
             $description . $p->text . "\n");
@@ -282,6 +282,7 @@ sub _entry {
     }elsif($log->is_info){
         $log->info('element ' . $node->xpath . ' not converted');
     }
+    return;
 }
 
 #just set the subject_field of the current entry
