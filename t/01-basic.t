@@ -223,7 +223,6 @@ could not find langSets for language(s): de
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5"/>
   </body>
 </TBX>
 

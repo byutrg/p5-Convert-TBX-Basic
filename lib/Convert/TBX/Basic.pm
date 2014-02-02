@@ -161,7 +161,9 @@ sub basic2min {
 
     my $min = TBX::Min->new();
     my $entries = $twig->{tbx_min_entries} || [];
-    $min->add_entry($_) for (@$entries);
+    for (@$entries){
+        $min->add_entry($_) if(@{$_->lang_groups});
+    }
     $min->id($twig->{tbx_min_att}{id});
     $min->description($twig->{tbx_min_att}{description});
     $min->source_lang($source);
