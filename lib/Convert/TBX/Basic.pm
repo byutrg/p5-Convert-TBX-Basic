@@ -329,7 +329,7 @@ sub _termGrpStart {
 
 # log that an element was not converted
 sub _log_missed {
-    my ($twig, $node) = @_;
+    my (undef, $node) = @_;
     $log->info('element ' . $node->xpath . ' not converted')
         if $log->is_info();
     return;
