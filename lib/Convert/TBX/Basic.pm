@@ -8,10 +8,7 @@ use autodie;
 use Path::Tiny;
 use Carp;
 use Log::Any '$log';
-use TBX::Min;
-use TBX::Min::ConceptEntry;
-use TBX::Min::LangGroup;
-use TBX::Min::TermGroup;
+use TBX::Min 0.06;
 use Try::Tiny;
 use Exporter::Easy (
     OK => ['basic2min']
