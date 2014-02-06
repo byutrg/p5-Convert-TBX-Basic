@@ -26,7 +26,7 @@ my ($stdout, $stderr) = capture {
 ok($? == 0, 'process exited successfully');
 
 my $data = get_data_section();
-is_string_nows($stdout, $data->{xml}, 'correct TBX output');
+is_xml($stdout, $data->{xml}, 'correct TBX output');
 is_string_nows($stderr, $data->{log}, 'correct log output');
 
 __DATA__
