@@ -4,7 +4,7 @@ Convert::TBX::Basic - Convert TBX-Basic data into TBX-Min
 
 # VERSION
 
-version 0.01
+version 0.02
 
 # SYNOPSIS
 
@@ -76,7 +76,9 @@ to make the conversion process more tranparent to the user.
 
 # SEE ALSO
 
-[basic2min](http://search.cpan.org/perldoc?basic2min)
+- [basic2min](http://search.cpan.org/perldoc?basic2min) (the included script)
+- [TBX::Min](http://search.cpan.org/perldoc?TBX::Min)
+- [Convert::TBX::Min](http://search.cpan.org/perldoc?Convert::TBX::Min)
 
 # AUTHOR
 
