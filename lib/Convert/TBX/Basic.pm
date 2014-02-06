@@ -344,4 +344,12 @@ to make the conversion process more tranparent to the user.
 
 =head1 SEE ALSO
 
-L<basic2min>
+=over
+
+=item L<basic2min> (the included script)
+
+=item L<TBX::Min>
+
+=item L<Convert::TBX::Min>
+
+=back

@@ -1,6 +1,7 @@
 Revision history for Convert-TBX-Basic
 
 {{$NEXT}}
-
+    require newer version of TBX::Min
+    updated tests and documentation
 0.01      2014-02-01 23:16:01 America/Los_Angeles
 	initial release
