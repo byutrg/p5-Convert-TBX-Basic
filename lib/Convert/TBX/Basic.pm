@@ -13,6 +13,7 @@ use Try::Tiny;
 use Exporter::Easy (
     OK => ['basic2min']
 );
+use open ':encoding(utf-8)', ':std'; #this ensures output file is UTF-8
 
 my %status_map = (
     'preferredTerm-admn-sts' => 'preferred',
