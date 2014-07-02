@@ -8,7 +8,7 @@ use autodie;
 use Path::Tiny;
 use Carp;
 use Log::Any '$log';
-use TBX::Min; #0.06;
+use TBX::Min 0.07;
 use Try::Tiny;
 use Exporter::Easy (
     OK => ['basic2min']
