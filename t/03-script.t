@@ -44,79 +44,79 @@ This is a sample TBX-Basic file from the Translation Research Group (tbxconvert.
     <languages source="en" target="fr"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="en">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="en">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="fr">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="fr">
+        <tig>
           <term>courriel</term>
-        </termGroup>
-      </langGroup>
-    </entry>
-    <entry id="c6">
-      <langGroup xml:lang="en">
-        <termGroup>
+        </tig>
+      </langSet>
+    </termEntry>
+    <termEntry id="c6">
+      <langSet xml:lang="en">
+        <tig>
           <term>federated database</term>
           <note>context:Users and applications interface with the federated
               database managed by the federated server. </note>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="fr">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="fr">
+        <tig>
           <term>base de donnees federee</term>
           <note>context:Une base de donnees federee est une base de donnees
               repartie heterogene constituee de donnees federees, et necessite donc
               une architecture qui permet la communication entre les differentes
               sources de donnees. </note>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-    </entry>
-    <entry id="c7">
-      <langGroup xml:lang="en">
-        <termGroup>
+        </tig>
+      </langSet>
+    </termEntry>
+    <termEntry id="c7">
+      <langSet xml:lang="en">
+        <tig>
           <term>progressive lens</term>
           <termStatus>preferred</termStatus>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-        <termGroup>
+        </tig>
+        <tig>
           <term>progressive addition lens</term>
           <note>termType:fullForm</note>
           <termStatus>admitted</termStatus>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-        <termGroup>
+        </tig>
+        <tig>
           <term>PAL</term>
           <note>termType:acronym</note>
           <termStatus>notRecommended</termStatus>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-        <termGroup>
+        </tig>
+        <tig>
           <term>progressive power lens</term>
           <termStatus>admitted</termStatus>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-        <termGroup>
+        </tig>
+        <tig>
           <term>graduated lens</term>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="fr">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="fr">
+        <tig>
           <term>lentille progressive</term>
           <note>grammaticalGender:feminine</note>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-    </entry>
-    <entry id="c1">
+        </tig>
+      </langSet>
+    </termEntry>
+    <termEntry id="c1">
       <subjectField>manufacturing</subjectField>
-      <langGroup xml:lang="en">
-        <termGroup>
+      <langSet xml:lang="en">
+        <tig>
           <term>scheduled operation</term>
           <customer>IBM</customer>
           <note>termType:fullForm
@@ -127,13 +127,13 @@ source:IBM
 projectSubset:Tivoli Storage Manager</note>
           <termStatus>preferred</termStatus>
           <partOfSpeech>verb</partOfSpeech>
-        </termGroup>
-      </langGroup>
-    </entry>
-    <entry id="c2">
+        </tig>
+      </langSet>
+    </termEntry>
+    <termEntry id="c2">
       <subjectField>manufacturing</subjectField>
-      <langGroup xml:lang="en">
-        <termGroup>
+      <langSet xml:lang="en">
+        <tig>
           <term>unscheduled operation</term>
           <customer>SAX Manufacturing</customer>
           <note>termType:fullForm
@@ -151,9 +151,9 @@ This is a sample entry with some data categories at the term or
               language level</note>
           <termStatus>admitted</termStatus>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 

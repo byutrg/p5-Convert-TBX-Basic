@@ -120,18 +120,18 @@ __DATA__
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="DE">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="DE">
+        <tig>
           <term>email</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -168,14 +168,14 @@ __DATA__
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
           <partOfSpeech>noun</partOfSpeech>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -212,14 +212,14 @@ __DATA__
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
           <customer>IBM</customer>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -256,14 +256,14 @@ __DATA__
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
           <note>some note</note>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -315,9 +315,9 @@ If not specifically represented in TBX-Min, extra data in
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
           <note>
             xxx:descrip note
@@ -326,14 +326,14 @@ If not specifically represented in TBX-Min, extra data in
             2007-07-22
             note note
         </note>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="DE">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="DE">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -394,18 +394,18 @@ Some elements cannot be converted at all, and they must be logged
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="DE">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="DE">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -451,14 +451,14 @@ element /martif/text/back not converted
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
+    <termEntry id="c5">
       <subjectField>information technology</subjectField>
-      <langGroup xml:lang="EN">
-        <termGroup>
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -517,32 +517,32 @@ element /martif/text/back not converted
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
           <termStatus>preferred</termStatus>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="EN">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="EN">
+        <tig>
           <term>electronic mail</term>
           <termStatus>admitted</termStatus>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="EN">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="EN">
+        <tig>
           <term>computer mail</term>
           <termStatus>notRecommended</termStatus>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="EN">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="EN">
+        <tig>
           <term>internet mail</term>
           <termStatus>obsolete</termStatus>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -583,18 +583,18 @@ element /martif/text/back not converted
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="En">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="En">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-      <langGroup xml:lang="de">
-        <termGroup>
+        </tig>
+      </langSet>
+      <langSet xml:lang="de">
+        <tig>
           <term>email</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
@@ -638,13 +638,13 @@ FR, which was not specified, should be ignored.
     <languages source="EN" target="DE"/>
   </header>
   <body>
-    <entry id="c5">
-      <langGroup xml:lang="EN">
-        <termGroup>
+    <termEntry id="c5">
+      <langSet xml:lang="EN">
+        <tig>
           <term>e-mail</term>
-        </termGroup>
-      </langGroup>
-    </entry>
+        </tig>
+      </langSet>
+    </termEntry>
   </body>
 </TBX>
 
