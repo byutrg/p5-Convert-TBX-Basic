@@ -14,13 +14,14 @@ use Capture::Tiny 'capture';
 use Devel::FindPerl qw(find_perl_interpreter);
 
 my $PERL  = find_perl_interpreter() || die "can't find perl!\n";
+$PERL = $^X if $PERL ne $^X;
 my $script_path = path( $Bin, qw(.. bin basic2min) )->realpath;
 my $include_path = path($Bin, qw(.. lib))->realpath;
 my $data_path = path($Bin, qw(corpus basic_sample.tbx));
 
 my ($stdout, $stderr) = capture {
-    system(qq{"$PERL"}, qq{-I"$include_path"},
-        qq{"$script_path"}, qq{"$data_path"}, 'en', 'fr');
+    system(qq{$PERL}, qq{-I"$include_path"},
+        qq{$script_path}, qq{$data_path}, 'en', 'fr');
 };
 
 ok($? == 0, 'process exited successfully')
