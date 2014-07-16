@@ -91,8 +91,8 @@ language specified.
 
 =cut
 sub basic2min {
-    (my ($data, $source, $target) = @_) == 3 or
-        croak 'Usage: basic2min(data, source-language, target-language)';
+    my ($self, $data, $source, $target) = @_;# == 3 or
+#         croak 'Usage: basic2min(data, source-language, target-language)';
 
     my $fh = _get_handle($data);
 
@@ -241,19 +241,20 @@ sub _status {
 }
 
 # turn the node info into a note labeled with the type;
-# paste this at the end of any existing note
+# the type becomes a noteKey and the info becomes noteValue
 sub _as_note {
 	my ($twig, $node) = @_;
 	my $grp = $twig->{tbx_min_current_term_grp};
-	my $note = $grp->note() || '';
-    my $type = $node->att('type') || '';
-    $type .= ':' if $type;
 
-	$grp->note($note . "\n" .
-		$type . $node->text);
-    if($log->is_info and $node->name ne 'note'){
-        $log->info('element ' . $node->xpath . ' pasted in note');
-    }
+ 	if (@{$grp->note_groups} > 0)
+ 	{
+ 		&_noteStart($twig, $node->text, $node->att('type'));
+ 	}
+	else
+	{
+		&_noteGrpStart($twig);
+		&_noteStart($twig, $node->text, $node->att('type'));
+	}
 
 	return 1;
 }
@@ -326,6 +327,22 @@ sub _termGrpStart {
     $twig->{tbx_min_current_lang_grp}->add_term_group($term);
     $twig->{tbx_min_current_term_grp} = $term;
     return 1;
+}
+
+sub _noteGrpStart {
+	my ($twig) = @_;
+	my $group = TBX::Min::NoteGrp->new;
+	$twig->{tbx_min_current_term_grp}->add_note_group($group);
+	$twig->{tbx_min_current_note_grp} = $group;
+	return 1;
+}
+
+sub _noteStart {
+	my ($twig, $value, $key) = @_;
+	my $note = TBX::Min::Note->new(noteValue => $value, noteKey => $key);
+	$twig->{tbx_min_current_note_grp}->add_note($note);
+	$twig->{tbx_min_current_note} = $note;
+	return 1;
 }
 
 # log that an element was not converted
