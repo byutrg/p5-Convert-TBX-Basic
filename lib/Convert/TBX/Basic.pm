@@ -8,7 +8,7 @@ use autodie;
 use Path::Tiny;
 use Carp;
 use Log::Any '$log';
-use TBX::Min 0.06;
+use TBX::Min 0.07;
 use Try::Tiny;
 use Exporter::Easy (
     OK => ['basic2min']
@@ -91,8 +91,8 @@ language specified.
 
 =cut
 sub basic2min {
-    (my ($data, $source, $target) = @_) == 3 or
-        croak 'Usage: basic2min(data, source-language, target-language)';
+    my ($self, $data, $source, $target) = @_;# == 3 or
+#         croak 'Usage: basic2min(data, source-language, target-language)';
 
     my $fh = _get_handle($data);
 
@@ -124,7 +124,7 @@ sub basic2min {
                     subject_field($_->text)},
 
             # these become attributes of the current
-            # TBX::Min::TermGroup object
+            # TBX::Min::TIG object
             'tig/termNote[@type="administrativeStatus"]' => \&_status,
             term => sub {shift->{tbx_min_current_term_grp}->
                 term($_->text)},
@@ -136,7 +136,7 @@ sub basic2min {
                 shift->{tbx_min_current_term_grp}->customer($_->text)},
 
             # the information which cannot be converted faithfully
-            # gets added as a note to the current TBX::Min::TermGroup,
+            # gets added as a note to the current TBX::Min::TIG,
             # with its data category prepended
             'tig/admin' => \&_as_note,
             'tig/descrip' => \&_as_note,
@@ -173,7 +173,7 @@ sub basic2min {
     # use handlers to process individual tags and
     # add information to $min
     $twig->{tbx_min} = $min;
-    $twig->parse($fh);
+    $twig->safe_parse($fh); #using safe_parse here prevents crash when encoded (the open ':encoding(utf-8)) file is passed in
 
     # warn if the document didn't have tig's of the given source and
     # target language
@@ -241,19 +241,20 @@ sub _status {
 }
 
 # turn the node info into a note labeled with the type;
-# paste this at the end of any existing note
+# the type becomes a noteKey and the info becomes noteValue
 sub _as_note {
 	my ($twig, $node) = @_;
 	my $grp = $twig->{tbx_min_current_term_grp};
-	my $note = $grp->note() || '';
-    my $type = $node->att('type') || '';
-    $type .= ':' if $type;
 
-	$grp->note($note . "\n" .
-		$type . $node->text);
-    if($log->is_info and $node->name ne 'note'){
-        $log->info('element ' . $node->xpath . ' pasted in note');
-    }
+ 	if (@{$grp->note_groups} > 0)
+ 	{
+ 		&_noteStart($twig, $node->text, $node->att('type'));
+ 	}
+	else
+	{
+		&_noteGrpStart($twig);
+		&_noteStart($twig, $node->text, $node->att('type'));
+	}
 
 	return 1;
 }
@@ -261,7 +262,7 @@ sub _as_note {
 # add a new entry to the list of those found in this file
 sub _entry_start {
     my ($twig, $node) = @_;
-    my $entry = TBX::Min::Entry->new();
+    my $entry = TBX::Min::TermEntry->new();
     if($node->att('id')){
         $entry->id($node->att('id'));
     }else{
@@ -310,7 +311,7 @@ sub _langStart {
         return 1;
     }
 
-    $lang_grp = TBX::Min::LangGroup->new();
+    $lang_grp = TBX::Min::LangSet->new();
     $lang_grp->code($lang);
     $twig->{tbx_found_languages}{lc $lang} = undef;
     $twig->{tbx_min_min_current_entry}->add_lang_group($lang_grp);
@@ -322,10 +323,26 @@ sub _langStart {
 # and set it as the current termGroup.
 sub _termGrpStart {
     my ($twig) = @_;
-    my $term = TBX::Min::TermGroup->new();
+    my $term = TBX::Min::TIG->new();
     $twig->{tbx_min_current_lang_grp}->add_term_group($term);
     $twig->{tbx_min_current_term_grp} = $term;
     return 1;
+}
+
+sub _noteGrpStart {
+	my ($twig) = @_;
+	my $group = TBX::Min::NoteGrp->new;
+	$twig->{tbx_min_current_term_grp}->add_note_group($group);
+	$twig->{tbx_min_current_note_grp} = $group;
+	return 1;
+}
+
+sub _noteStart {
+	my ($twig, $value, $key) = @_;
+	my $note = TBX::Min::Note->new(noteValue => $value, noteKey => $key);
+	$twig->{tbx_min_current_note_grp}->add_note($note);
+	$twig->{tbx_min_current_note} = $note;
+	return 1;
 }
 
 # log that an element was not converted
