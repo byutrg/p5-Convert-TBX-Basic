@@ -260,7 +260,11 @@ __DATA__
       <langSet xml:lang="EN">
         <tig>
           <term>e-mail</term>
-          <note>some note</note>
+          <noteGrp>
+			<note>
+  			  <noteValue>some note</noteValue>
+			</note>
+          </noteGrp>
         </tig>
       </langSet>
     </termEntry>
@@ -319,13 +323,26 @@ If not specifically represented in TBX-Min, extra data in
       <langSet xml:lang="EN">
         <tig>
           <term>e-mail</term>
+        <noteGrp>
           <note>
-            xxx:descrip note
-            yyy:admin note
-            zzz:termNote note
-            2007-07-22
-            note note
-        </note>
+            <noteKey>xxx</noteKey>
+            <noteValue>descrip note</noteValue>
+          </note>
+          <note>
+            <noteKey>yyy</noteKey>
+            <noteValue>admin note</noteValue>
+          </note>
+          <note>
+            <noteKey>zzz</noteKey>
+            <noteValue>termNote note</noteValue>
+          </note>
+          <note>
+            <noteValue>2007-07-22</noteValue>
+          </note>
+          <note>
+            <noteValue>note note</noteValue>
+          </note>
+        </noteGrp>
         </tig>
       </langSet>
       <langSet xml:lang="DE">
@@ -338,12 +355,8 @@ If not specifically represented in TBX-Min, extra data in
 </TBX>
 
 --- log
-element /martif/text/body/termEntry/langSet/tig/descrip pasted in note
-element /martif/text/body/termEntry/langSet/tig/admin pasted in note
-element /martif/text/body/termEntry/langSet/tig/termNote pasted in note
 element /martif/text/body/termEntry/langSet/tig/transacGrp/transac not converted
 element /martif/text/body/termEntry/langSet/tig/transacGrp/transacNote not converted
-element /martif/text/body/termEntry/langSet/tig/transacGrp/date pasted in note
 
 === elements not converted
 Some elements cannot be converted at all, and they must be logged

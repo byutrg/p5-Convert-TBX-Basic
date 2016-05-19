@@ -61,18 +61,28 @@ This is a sample TBX-Basic file from the Translation Research Group (tbxconvert.
       <langSet xml:lang="en">
         <tig>
           <term>federated database</term>
-          <note>context:Users and applications interface with the federated
-              database managed by the federated server. </note>
+          <noteGrp>
+            <note>
+              <noteKey>context</noteKey>
+              <noteValue>Users and applications interface with the federated
+                            database managed by the federated server. </noteValue>
+            </note>
+          </noteGrp>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
       </langSet>
       <langSet xml:lang="fr">
         <tig>
           <term>base de donnees federee</term>
-          <note>context:Une base de donnees federee est une base de donnees
-              repartie heterogene constituee de donnees federees, et necessite donc
-              une architecture qui permet la communication entre les differentes
-              sources de donnees. </note>
+          <noteGrp>
+            <note>
+              <noteKey>context</noteKey>
+              <noteValue>Une base de donnees federee est une base de donnees
+                            repartie heterogene constituee de donnees federees, et necessite donc
+                            une architecture qui permet la communication entre les differentes
+                            sources de donnees. </noteValue>
+            </note>
+          </noteGrp>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
       </langSet>
@@ -86,13 +96,23 @@ This is a sample TBX-Basic file from the Translation Research Group (tbxconvert.
         </tig>
         <tig>
           <term>progressive addition lens</term>
-          <note>termType:fullForm</note>
+          <noteGrp>
+            <note>
+              <noteKey>termType</noteKey>
+              <noteValue>fullForm</noteValue>
+            </note>
+          </noteGrp>
           <termStatus>admitted</termStatus>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
         <tig>
           <term>PAL</term>
-          <note>termType:acronym</note>
+          <noteGrp>
+            <note>
+              <noteKey>termType</noteKey>
+              <noteValue>acronym</noteValue>
+            </note>
+          </noteGrp>
           <termStatus>notRecommended</termStatus>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
@@ -109,7 +129,12 @@ This is a sample TBX-Basic file from the Translation Research Group (tbxconvert.
       <langSet xml:lang="fr">
         <tig>
           <term>lentille progressive</term>
-          <note>grammaticalGender:feminine</note>
+          <noteGrp>
+            <note>
+              <noteKey>grammaticalGender</noteKey>
+              <noteValue>feminine</noteValue>
+            </note>
+          </noteGrp>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
       </langSet>
@@ -120,12 +145,32 @@ This is a sample TBX-Basic file from the Translation Research Group (tbxconvert.
         <tig>
           <term>scheduled operation</term>
           <customer>IBM</customer>
-          <note>termType:fullForm
-grammaticalGender:masculine
-geographicalUsage:Canada
-termLocation:menuItem
-source:IBM
-projectSubset:Tivoli Storage Manager</note>
+          <noteGrp>
+            <note>
+              <noteKey>termType</noteKey>
+              <noteValue>fullForm</noteValue>
+            </note>
+            <note>
+              <noteKey>grammaticalGender</noteKey>
+              <noteValue>masculine</noteValue>
+            </note>
+            <note>
+              <noteKey>geographicalUsage</noteKey>
+              <noteValue>Canada</noteValue>
+            </note>
+            <note>
+              <noteKey>termLocation</noteKey>
+              <noteValue>menuItem</noteValue>
+            </note>
+            <note>
+              <noteKey>source</noteKey>
+              <noteValue>IBM</noteValue>
+            </note>
+            <note>
+              <noteKey>projectSubset</noteKey>
+              <noteValue>Tivoli Storage Manager</noteValue>
+            </note>
+          </noteGrp>
           <termStatus>preferred</termStatus>
           <partOfSpeech>verb</partOfSpeech>
         </tig>
@@ -137,19 +182,54 @@ projectSubset:Tivoli Storage Manager</note>
         <tig>
           <term>unscheduled operation</term>
           <customer>SAX Manufacturing</customer>
-          <note>termType:fullForm
-grammaticalGender:masculine
-geographicalUsage:en-US
-termLocation:radioButton
-context:Unscheduled operations should be recorded in a log.
-source:Manufacturing Process Manual V2
-projectSubset:Service department
-source:Manufacturing Process Manual V2
-projectSubset:Service department
-2007-07-22
-2007-07-23
-This is a sample entry with some data categories at the term or
-              language level</note>
+          <noteGrp>
+            <note>
+              <noteKey>termType</noteKey>
+              <noteValue>fullForm</noteValue>
+            </note>
+            <note>
+              <noteKey>grammaticalGender</noteKey>
+              <noteValue>masculine</noteValue>
+            </note>
+            <note>
+              <noteKey>geographicalUsage</noteKey>
+              <noteValue>en-US</noteValue>
+            </note>
+            <note>
+              <noteKey>termLocation</noteKey>
+              <noteValue>radioButton</noteValue>
+            </note>
+            <note>
+              <noteKey>context</noteKey>
+              <noteValue>Unscheduled operations should be recorded in a log.</noteValue>
+            </note>
+            <note>
+              <noteKey>source</noteKey>
+              <noteValue>Manufacturing Process Manual V2</noteValue>
+            </note>
+            <note>
+              <noteKey>projectSubset</noteKey>
+              <noteValue>Service department</noteValue>
+            </note>
+            <note>
+              <noteKey>source</noteKey>
+              <noteValue>Manufacturing Process Manual V2</noteValue>
+            </note>
+            <note>
+              <noteKey>projectSubset</noteKey>
+              <noteValue>Service department</noteValue>
+            </note>
+            <note>
+              <noteValue>2007-07-22</noteValue>
+            </note>
+            <note>
+              <noteValue>2007-07-23</noteValue>
+            </note>
+            <note>
+              <noteValue>This is a sample entry with some data categories at the term or
+                            language level</noteValue>
+            </note>
+          </noteGrp>
           <termStatus>admitted</termStatus>
           <partOfSpeech>noun</partOfSpeech>
         </tig>
@@ -161,14 +241,9 @@ This is a sample entry with some data categories at the term or
 @@ log
 element /martif/martifHeader/encodingDesc/p not converted
 element /martif/martifHeader/encodingDesc not converted
-element /martif/text/body/termEntry[2]/langSet/tig/descrip pasted in note
-element /martif/text/body/termEntry[2]/langSet[2]/tig/descrip pasted in note
 element /martif/text/body/termEntry[3]/descripGrp/descrip not converted
 element /martif/text/body/termEntry[3]/descripGrp/admin not converted
 element /martif/text/body/termEntry[3]/descripGrp not converted
-element /martif/text/body/termEntry[3]/langSet/tig[2]/termNote[2] pasted in note
-element /martif/text/body/termEntry[3]/langSet/tig[3]/termNote[2] pasted in note
-element /martif/text/body/termEntry[3]/langSet[2]/tig/termNote[2] pasted in note
 element /martif/text/body/termEntry[4]/descripGrp/descrip not converted
 element /martif/text/body/termEntry[4]/descripGrp/admin not converted
 element /martif/text/body/termEntry[4]/descripGrp not converted
@@ -182,31 +257,14 @@ element /martif/text/body/termEntry[4]/note not converted
 element /martif/text/body/termEntry[4]/ref not converted
 element /martif/text/body/termEntry[4]/xref not converted
 element /martif/text/body/termEntry[4]/xref[2] not converted
-element /martif/text/body/termEntry[4]/langSet/tig/termNote[2] pasted in note
-element /martif/text/body/termEntry[4]/langSet/tig/termNote[3] pasted in note
-element /martif/text/body/termEntry[4]/langSet/tig/termNote[5] pasted in note
-element /martif/text/body/termEntry[4]/langSet/tig/termNote[6] pasted in note
 element /martif/text/body/termEntry[4]/langSet/tig/descripGrp/descrip not converted
 element /martif/text/body/termEntry[4]/langSet/tig/descripGrp/admin not converted
 element /martif/text/body/termEntry[4]/langSet/tig/descripGrp not converted
-element /martif/text/body/termEntry[4]/langSet/tig/admin[2] pasted in note
-element /martif/text/body/termEntry[4]/langSet/tig/admin[3] pasted in note
 element /martif/text/body/termEntry[5]/langSet/descrip not converted
-element /martif/text/body/termEntry[5]/langSet/tig/termNote pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/termNote[2] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/termNote[4] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/termNote[6] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/descrip pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/admin[2] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/admin[3] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/admin[5] pasted in note
-element /martif/text/body/termEntry[5]/langSet/tig/admin[6] pasted in note
 element /martif/text/body/termEntry[5]/langSet/tig/transacGrp/transac not converted
 element /martif/text/body/termEntry[5]/langSet/tig/transacGrp/transacNote not converted
-element /martif/text/body/termEntry[5]/langSet/tig/transacGrp/date pasted in note
 element /martif/text/body/termEntry[5]/langSet/tig/transacGrp[2]/transac not converted
 element /martif/text/body/termEntry[5]/langSet/tig/transacGrp[2]/transacNote not converted
-element /martif/text/body/termEntry[5]/langSet/tig/transacGrp[2]/date pasted in note
 element /martif/text/body/termEntry[5]/langSet/tig/ref not converted
 element /martif/text/body/termEntry[5]/langSet/tig/xref not converted
 element /martif/text/back/refObjectList/refObject/item not converted

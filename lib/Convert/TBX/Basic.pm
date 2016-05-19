@@ -91,8 +91,8 @@ language specified.
 
 =cut
 sub basic2min {
-    my ($self, $data, $source, $target) = @_;# == 3 or
-#         croak 'Usage: basic2min(data, source-language, target-language)';
+    @_ == 3 or croak 'Usage: basic2min(data, source-language, target-language)';
+    my ($data, $source, $target) = @_;
 
     my $fh = _get_handle($data);
 
